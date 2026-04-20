@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background-color: #F5F7FA;
+}
+
+@layer base {
+  body {
+    @apply bg-steam-cream font-sans text-steam-body antialiased;
+  }
+}
+
+.section-wrap {
+  @apply mx-auto w-full max-w-[1440px] px-6 md:px-8;
+}
+
+.fade-mask::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 26, 0.82),
+    rgba(26, 26, 26, 0.35),
+    rgba(27, 54, 93, 0.15)
+  );
+}
+
+
+@layer components {
+  .btn-primary {
+    @apply rounded-full bg-steam-navyDeep px-9 py-4 text-[15px] font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-steam-navy hover:shadow-lg;
+  }
+  .btn-cta {
+    @apply rounded-full bg-steam-orange px-9 py-4 text-[15px] font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-steam-orangeHover hover:shadow-lg;
+  }
+  .btn-cta-outline {
+    @apply rounded-full border border-white bg-transparent px-9 py-4 text-[15px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10;
+  }
+  .heading-display {
+    @apply font-display uppercase tracking-wide text-steam-navy;
+  }
+  .panel-elevated {
+    @apply rounded-2xl border border-steam-navy/10 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-brand;
+  }
+}
