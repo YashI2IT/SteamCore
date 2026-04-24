@@ -230,7 +230,7 @@ export default function Contact() {
                 'Explore reliability, maintenance, or project support',
               ].map((t) => (
                 <div key={t} className="flex items-start gap-3">
-                  <span className="mt-0.5 grid h-6 w-6 place-items-center rounded-full bg-steam-orange text-white">
+                  <span className="mt-0.5 grid h-6 w-6 min-h-6 min-w-6 shrink-0 place-items-center rounded-full bg-steam-orange text-white">
                     <Check size={16} strokeWidth={2.5} />
                   </span>
                   <span>{t}</span>
