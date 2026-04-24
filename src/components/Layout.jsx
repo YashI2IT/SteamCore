@@ -61,11 +61,12 @@ export default function Layout() {
   useEffect(() => {
     const onScroll = () => {
       const currentY = window.scrollY
-      const isScrollingDown = currentY > lastScrollY.current
+      const isScrollingUp = currentY < lastScrollY.current
       const hasScrolledEnough = currentY > 80
 
       setIsAtTop(currentY < 10)
-      setShowHeader(!(isScrollingDown && hasScrolledEnough))
+      // Show when scrolling down (or at top), hide when scrolling up
+      setShowHeader(isScrollingUp || !hasScrolledEnough)
       lastScrollY.current = currentY
     }
 
@@ -91,12 +92,15 @@ export default function Layout() {
     <div className="min-h-screen bg-steam-cream text-steam-body overflow-x-hidden">
       <Motion.header
         initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className={[
-          'fixed left-0 right-0 top-0 z-50 w-full transition-all duration-500 ease-out',
-          showHeader ? 'translate-y-0' : '-translate-y-full',
-        ].join(' ')}
+        animate={{ 
+          y: showHeader ? 0 : -100,
+          opacity: showHeader ? 1 : 0,
+        }}
+        transition={{ 
+          y: { duration: showHeader ? 0.45 : 0.3, ease: [0.16, 1, 0.3, 1] },
+          opacity: { duration: showHeader ? 0.45 : 0.25 },
+        }}
+        className="fixed left-0 right-0 top-0 z-50 w-full"
       >
         <div className="px-4 pt-4 sm:px-6 sm:pt-5 lg:px-8">
           <div className="flex h-[52px] w-full items-center justify-between rounded-[28px] border border-black/10 bg-white/75 px-4 shadow-[0_2px_20px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:h-[56px] sm:px-5">
