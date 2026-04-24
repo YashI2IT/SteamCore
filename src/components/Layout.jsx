@@ -59,15 +59,33 @@ export default function Layout() {
   const isHome = location.pathname === '/'
 
   useEffect(() => {
-    const onScroll = () => {
-      const currentY = window.scrollY
-      const isScrollingUp = currentY < lastScrollY.current
-      const hasScrolledEnough = currentY > 80
+    let ticking = false
 
-      setIsAtTop(currentY < 10)
-      // Show when scrolling down (or at top), hide when scrolling up
-      setShowHeader(isScrollingUp || !hasScrolledEnough)
-      lastScrollY.current = currentY
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const currentY = window.scrollY
+        const delta = currentY - lastScrollY.current
+
+        setIsAtTop(currentY < 10)
+
+        // Only trigger on intentional scroll (delta > 6px) to avoid jitter
+        if (Math.abs(delta) > 6) {
+          if (currentY < 10) {
+            setShowHeader(true)
+          } else if (delta > 0) {
+            // Scrolling up → hide
+            setShowHeader(false)
+          } else {
+            // Scrolling down → show
+            setShowHeader(true)
+          }
+          lastScrollY.current = currentY
+        }
+
+        ticking = false
+      })
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -93,12 +111,15 @@ export default function Layout() {
       <Motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ 
-          y: showHeader ? 0 : -100,
+          y: showHeader ? 0 : -110,
           opacity: showHeader ? 1 : 0,
         }}
         transition={{ 
-          y: { duration: showHeader ? 0.45 : 0.3, ease: [0.16, 1, 0.3, 1] },
-          opacity: { duration: showHeader ? 0.45 : 0.25 },
+          type: 'spring',
+          stiffness: 260,
+          damping: 28,
+          mass: 0.8,
+          opacity: { duration: 0.25, ease: 'easeInOut' },
         }}
         className="fixed left-0 right-0 top-0 z-50 w-full"
       >
