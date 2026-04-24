@@ -1,9 +1,10 @@
 import { motion as Motion } from 'framer-motion'
+import { Award, CheckCircle2 } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
 
 export default function Founder() {
   return (
-    <main className="section-wrap space-y-10 pb-14">
+    <main className="section-wrap space-y-10 pb-14 pt-6">
       <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
         <p className="text-xs font-semibold uppercase tracking-brand text-steam-green">
           Founder / Leadership
@@ -20,7 +21,7 @@ export default function Founder() {
       </Reveal>
 
       <Reveal className="grid gap-6 rounded-2xl bg-steam-navy p-6 text-white md:grid-cols-[1fr_1.15fr] md:p-10">
-        <div className="flex flex-col justify-center rounded-2xl bg-white/10 p-8">
+        <Motion.div whileHover={{ y: -4 }} className="card-dark flex flex-col justify-center p-8">
           <p className="text-sm font-semibold uppercase tracking-brand text-steam-flame">Founder</p>
           <p className="mt-4 text-3xl font-medium tracking-tight md:text-4xl">Ajit D Jawale</p>
           <p className="mt-3 text-[15px] text-white/70">Founder & Lead Consultant</p>
@@ -28,14 +29,14 @@ export default function Founder() {
             He leads SteamCore’s technical direction, client engagements, and quality of delivery
             across boiler systems, utilities, energy optimization, and plant reliability assignments.
           </p>
-        </div>
-        <div className="rounded-2xl bg-white/10 p-8">
+        </Motion.div>
+        <Motion.div whileHover={{ y: -4 }} className="card-dark p-8">
           <p className="text-sm font-semibold uppercase tracking-brand text-steam-flame">Qualifications</p>
           <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/85 md:text-[16px]">
-            <li>M.Tech in Energy (University Rank 1)</li>
-            <li>BEE Certified Energy Auditor</li>
-            <li>First Class Boiler Proficiency</li>
-            <li>Board Member, BOE & Attendant Exams (Government of Maharashtra)</li>
+            <li className="flex gap-2 items-start"><Award size={20} className="text-steam-orange shrink-0 mt-0.5" /> M.Tech in Energy (University Rank 1)</li>
+            <li className="flex gap-2 items-start"><Award size={20} className="text-steam-orange shrink-0 mt-0.5" /> BEE Certified Energy Auditor</li>
+            <li className="flex gap-2 items-start"><Award size={20} className="text-steam-orange shrink-0 mt-0.5" /> First Class Boiler Proficiency</li>
+            <li className="flex gap-2 items-start"><Award size={20} className="text-steam-orange shrink-0 mt-0.5" /> Board Member, BOE & Attendant Exams (Government of Maharashtra)</li>
           </ul>
           <p className="mt-8 text-sm font-semibold uppercase tracking-brand text-steam-flame">
             Experience summary
@@ -45,7 +46,7 @@ export default function Founder() {
             orientation to field diagnosis, structured engineering, and sustainable performance
             improvement for process plants.
           </p>
-        </div>
+        </Motion.div>
       </Reveal>
 
       <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
@@ -61,9 +62,10 @@ export default function Founder() {
             'Training and capability building for plant teams',
             'Regulatory awareness and compliance-oriented engineering support',
           ].map((t) => (
-            <div key={t} className="panel-elevated p-6 text-[15px] text-steam-navy/90">
+            <Motion.div key={t} whileHover={{ y: -4 }} className="panel-elevated p-6 text-[15px] text-steam-navy/90 flex items-start gap-3">
+              <CheckCircle2 size={24} className="text-steam-green shrink-0 mt-0.5" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
       </Reveal>

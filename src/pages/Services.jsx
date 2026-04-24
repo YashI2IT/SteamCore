@@ -1,43 +1,53 @@
 import { Link } from 'react-router-dom'
+import { motion as Motion } from 'framer-motion'
+import { Check, Settings, CheckCircle2, PhoneCall } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
+import HoverVideoMedia from '../ui/HoverVideoMedia'
 
 import { getIndustrialImage } from '../data/images'
-
-const hashString = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  return Math.abs(hash);
-};
+import { getIndustrialVideo } from '../data/videos'
 
 function ServiceCard({ title, items, image }) {
-  const imgSrc = image || getIndustrialImage(hashString(title));
+  const imgSrc = image || getIndustrialImage(title);
+  const videoSrc = getIndustrialVideo(0);
   return (
-    <div className="group flex flex-col overflow-hidden panel-elevated">
-      <div className="relative h-48 w-full shrink-0 overflow-hidden">
-        <img
-          src={imgSrc}
+    <Motion.div
+      whileHover={{ y: -8, scale: 1.01 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-steam-navy/25 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
+    >
+      <div className="relative h-44 w-full shrink-0 overflow-hidden">
+        <HoverVideoMedia
+          posterSrc={imgSrc}
+          videoSrc={videoSrc}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          overlayClassName="bg-black/25 mix-blend-multiply group-hover:bg-black/10"
         />
-        <div className="absolute inset-0 bg-steam-navy/10 mix-blend-multiply transition-colors duration-500 group-hover:bg-steam-navy/0" />
       </div>
-      <div className="p-7 flex-grow">
-        <h3 className="text-xl font-semibold text-steam-navy">{title}</h3>
-        <ul className="mt-5 space-y-2 text-[15px] text-steam-body/95">
-          {items.map((t) => (
-            <li key={t}>• {t}</li>
+      <div className="flex flex-grow flex-col p-6">
+        <h3 className="text-[clamp(1.55rem,2.1vw,2.2rem)] font-display uppercase leading-[0.95] text-steam-navy">
+          {title}
+        </h3>
+        <ul className="mt-5 space-y-2.5 text-[15px] leading-relaxed text-steam-body/95">
+          {items.map((t, idx) => (
+            <li key={t} className="flex items-start gap-2">
+              <Check size={16} strokeWidth={2.5} className="mt-[0.25rem] shrink-0 text-steam-orange" />
+              <span>{t}</span>
+            </li>
           ))}
         </ul>
       </div>
-    </div>
+    </Motion.div>
   )
 }
 
 export default function Services() {
   return (
-    <main className="section-wrap space-y-10 pb-14">
-      <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
-        <h1 className="text-4xl font-bold tracking-tight text-steam-navy md:text-[56px] md:leading-[1.05]">
+    <main className="section-wrap space-y-10 pb-16 pt-6">
+      <Reveal className="relative overflow-hidden rounded-[34px] border-2 border-steam-navy/85 bg-steam-panel p-6 md:p-10">
+        <div className="pointer-events-none absolute -left-10 top-0 h-56 w-56 rounded-full bg-steam-purple/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-10 bottom-0 h-56 w-56 rounded-full bg-steam-orange/20 blur-3xl" />
+        <h1 className="text-4xl font-display uppercase tracking-tight text-steam-navy md:text-[64px] md:leading-[1]">
           Services
         </h1>
         <p className="mt-6 max-w-4xl text-[17px] leading-[1.45] text-steam-body">
@@ -52,7 +62,7 @@ export default function Services() {
         </p>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-navy p-6 text-white md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/90 bg-steam-purple p-6 text-white md:p-10">
         <h2 className="font-display text-3xl uppercase tracking-wide text-white md:text-[44px] md:leading-[1.08]">
           Primary services (website overview)
         </h2>
@@ -61,7 +71,8 @@ export default function Services() {
           offerings and extended engineering scopes are retained in the sections further down this
           page.
         </p>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <div className="mt-8 rounded-[26px] border border-white/25 bg-white/[0.08] p-4 md:p-5">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <ServiceCard
             title="Boiler operation & maintenance"
             items={[
@@ -133,17 +144,19 @@ export default function Services() {
             ]}
           />
         </div>
+        </div>
         <div className="mt-10">
           <Link
             to="/contact"
-            className="btn-cta inline-flex text-[15px]"
+            className="btn-cta inline-flex items-center gap-2 text-[15px]"
           >
+            <PhoneCall size={18} />
             Request a service / Contact us
           </Link>
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/85 bg-steam-panel p-6 md:p-10">
         <p className="text-xs font-semibold uppercase tracking-brand text-steam-green">
           Core service offerings
         </p>
@@ -326,7 +339,7 @@ export default function Services() {
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-navy p-6 text-white md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/90 bg-steam-purple p-6 text-white md:p-10">
         <h2 className="font-display text-3xl uppercase tracking-wide md:text-[44px] md:leading-[1.08]">
           Extended engineering support (as required)
         </h2>
@@ -341,24 +354,31 @@ export default function Services() {
             'Chimney height assessment as per regulatory requirements',
             'Technical inputs for structural and foundation design (with civil consultants)',
           ].map((t) => (
-            <div key={t} className="rounded-2xl bg-white/10 p-6 text-[15px] text-white/85">
+            <Motion.div
+              key={t}
+              whileHover={{ y: -4 }}
+              className="card-dark p-6 text-[15px] text-white/85 flex items-start gap-3"
+            >
+              <Settings size={20} className="shrink-0 text-steam-orange mt-0.5" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-navy p-6 text-white md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/90 bg-steam-navy p-6 text-white md:p-10">
         <h2 className="font-display text-3xl uppercase tracking-wide md:text-[44px] md:leading-[1.08]">
           Also included
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl bg-white/10 p-7 text-[16px] text-white/85">
+          <Motion.div whileHover={{ y: -4 }} className="card-dark p-7 text-[16px] text-white/85 flex items-center gap-3">
+            <CheckCircle2 size={24} className="text-steam-green shrink-0" />
             Boiler inspection & certification support
-          </div>
-          <div className="rounded-2xl bg-white/10 p-7 text-[16px] text-white/85">
+          </Motion.div>
+          <Motion.div whileHover={{ y: -4 }} className="card-dark p-7 text-[16px] text-white/85 flex items-center gap-3">
+            <CheckCircle2 size={24} className="text-steam-green shrink-0" />
             Consultancy & troubleshooting support across utilities
-          </div>
+          </Motion.div>
         </div>
       </Reveal>
     </main>

@@ -1,8 +1,10 @@
+import { motion as Motion } from 'framer-motion'
+import { CheckCircle2, Target } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
 
 export default function WhyChooseUs() {
   return (
-    <main className="section-wrap space-y-10 pb-14">
+    <main className="section-wrap space-y-10 pb-14 pt-6">
       <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
         <h1 className="text-4xl font-bold tracking-tight text-steam-navy md:text-[56px] md:leading-[1.05]">
           Why Choose SteamCore Energy Engineering LLP?
@@ -27,9 +29,10 @@ export default function WhyChooseUs() {
             'Root-cause driven troubleshooting',
             'Focus on reliability, energy optimization, and compliance',
           ].map((t) => (
-            <div key={t} className="rounded-2xl bg-white/10 p-6 text-[15px] text-white/85 md:text-[16px]">
+            <Motion.div key={t} whileHover={{ y: -4 }} className="card-dark p-6 text-[15px] text-white/85 md:text-[16px] flex items-start gap-3">
+              <CheckCircle2 size={24} className="text-steam-green shrink-0 mt-0.5" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
       </Reveal>
@@ -47,9 +50,10 @@ export default function WhyChooseUs() {
             'Support through implementation, commissioning, and performance checks',
             'Training and capability building for sustainable results',
           ].map((t) => (
-            <div key={t} className="panel-elevated p-6 text-[14px] text-steam-body">
+            <Motion.div key={t} whileHover={{ y: -4 }} className="panel-elevated p-6 text-[14px] text-steam-body flex items-start gap-3">
+              <Target size={20} className="text-steam-orange shrink-0 mt-0.5" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
       </Reveal>

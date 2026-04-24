@@ -1,42 +1,44 @@
 import { Link } from 'react-router-dom'
 import { motion as Motion } from 'framer-motion'
+import { GraduationCap, Users, BookOpen, Send } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
+import HoverVideoMedia from '../ui/HoverVideoMedia'
 import { getIndustrialImage } from '../data/images'
-
-const hashString = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  return Math.abs(hash);
-};
+import { getIndustrialVideo } from '../data/videos'
 
 function TopicCard({ title, body }) {
-  const imgSrc = getIndustrialImage(hashString(title));
+  const imgSrc = getIndustrialImage(title);
+  const videoSrc = getIndustrialVideo(0);
   return (
-    <div className="group overflow-hidden flex flex-col rounded-2xl border border-white/10 bg-white/10">
+    <Motion.div
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25 }}
+      className="card-dark group flex h-full flex-col overflow-hidden"
+    >
       <div className="relative h-48 w-full shrink-0 overflow-hidden">
-        <img
-          src={imgSrc}
+        <HoverVideoMedia
+          posterSrc={imgSrc}
+          videoSrc={videoSrc}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          overlayClassName="bg-steam-navy/15 mix-blend-multiply group-hover:bg-steam-navy/0"
         />
-        <div className="absolute inset-0 bg-steam-navy/15 mix-blend-multiply transition-colors duration-500 group-hover:bg-steam-navy/0" />
       </div>
       <div className="p-7 flex-grow">
-        <h3 className="text-xl font-semibold text-white">{title}</h3>
+        <h3 className="font-display text-4xl uppercase leading-[0.95] text-white">{title}</h3>
         <p className="mt-4 text-[14px] leading-relaxed text-white/80">{body}</p>
       </div>
-    </div>
+    </Motion.div>
   )
 }
 
 export default function Training() {
   return (
-    <main className="section-wrap space-y-10 pb-14">
-      <Reveal className="relative overflow-hidden rounded-2xl bg-steam-navy p-6 text-white md:p-12">
+    <main className="section-wrap space-y-10 pb-16 pt-6">
+      <Reveal className="relative overflow-hidden rounded-[34px] border-2 border-steam-navy/90 bg-steam-purple p-6 text-white md:p-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.12),transparent_40%)]" />
         <div className="relative">
-          <p className="text-xs font-semibold uppercase tracking-brand text-steam-flame">
-            Training programs
+          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-brand text-steam-flame">
+            <GraduationCap size={18} /> Training programs
           </p>
           <h1 className="mt-4 font-display text-4xl uppercase tracking-wide text-white md:text-[56px] md:leading-[1.05]">
             Training
@@ -49,8 +51,8 @@ export default function Training() {
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
-        <h2 className="text-3xl font-bold tracking-tight text-steam-navy md:text-[44px] md:leading-[1.08]">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/85 bg-steam-panel p-6 md:p-10">
+        <h2 className="text-3xl font-display uppercase tracking-tight text-steam-navy md:text-[54px] md:leading-[1]">
           Training introduction
         </h2>
         <p className="mt-6 max-w-4xl text-[16px] leading-[1.55] text-steam-body/95">
@@ -60,7 +62,7 @@ export default function Training() {
         </p>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-navy p-6 text-white md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/90 bg-steam-navy p-6 text-white md:p-10">
         <div className="grid gap-4 lg:grid-cols-2">
           <TopicCard
             title="Boiler operation training"
@@ -85,8 +87,8 @@ export default function Training() {
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-panel p-6 md:p-10">
-        <h2 className="text-3xl font-bold tracking-tight text-steam-navy md:text-[44px] md:leading-[1.08]">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/85 bg-steam-panel p-6 md:p-10">
+        <h2 className="text-3xl font-display uppercase tracking-tight text-steam-navy md:text-[54px] md:leading-[1]">
           Target audience
         </h2>
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -98,14 +100,15 @@ export default function Training() {
             'Technical supervisors',
             'Students or exam candidates',
           ].map((t) => (
-            <div key={t} className="panel-elevated px-5 py-4 text-[14px] font-semibold text-steam-navy">
+            <Motion.div key={t} whileHover={{ y: -4 }} className="panel-elevated px-5 py-4 text-[14px] font-semibold text-steam-navy flex items-center gap-2">
+              <Users size={16} className="text-steam-green shrink-0" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
       </Reveal>
 
-      <Reveal className="rounded-2xl bg-steam-navy p-6 text-white md:p-10">
+      <Reveal className="rounded-[34px] border-2 border-steam-navy/90 bg-steam-purple p-6 text-white md:p-10">
         <h2 className="font-display text-2xl uppercase tracking-wide text-white md:text-[36px]">
           Quick topic list
         </h2>
@@ -116,17 +119,18 @@ export default function Training() {
             'Utility system awareness sessions',
             'Exam-oriented training (BOE / Attendant)',
           ].map((t) => (
-            <div key={t} className="rounded-2xl bg-white/10 p-7 text-[16px] text-white/85">
+            <Motion.div key={t} whileHover={{ y: -4 }} className="card-dark p-7 text-[16px] text-white/85 flex items-start gap-3">
+              <BookOpen size={20} className="text-steam-flame shrink-0 mt-0.5" />
               {t}
-            </div>
+            </Motion.div>
           ))}
         </div>
         <div className="mt-10">
           <Link
             to="/contact"
-            className="btn-cta inline-flex text-[15px]"
+            className="btn-cta inline-flex items-center gap-2 text-[15px]"
           >
-            Contact for training
+            <Send size={18} /> Contact for training
           </Link>
         </div>
       </Reveal>
