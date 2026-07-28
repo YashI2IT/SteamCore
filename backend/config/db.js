@@ -2,8 +2,10 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
+    mongoose.set('bufferCommands', false);
     const conn = await mongoose.connect(process.env.MONGO_URI, {
-      // Options are no longer needed in Mongoose 6+ but good practice if using older
+      serverSelectionTimeoutMS: 2000,
+      bufferCommands: false, // Instantly fail if DB is offline, preventing Vercel timeout
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
