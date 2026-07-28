@@ -14,20 +14,22 @@ export const handleChat = async (req, res) => {
     }
 
     // 1. Register Session and Visitor
-    await Session.findOneAndUpdate(
-      { sessionId },
-      { sessionId, ip, browser, device },
-      { upsert: true, returnDocument: 'after' }
-    );
-
-    const visitor = await Visitor.findOneAndUpdate(
-      { ip },
-      { $inc: { visitCount: 1 }, lastVisit: new Date(), userAgent: browser },
-      { upsert: true, returnDocument: 'after' }
-    );
-
-    // 2. Save User Message
-    await Chat.create({ sessionId, role: 'user', message, browser, ip, device });
+    try {
+      await Session.findOneAndUpdate(
+        { sessionId },
+        { sessionId, ip, browser, device },
+        { upsert: true, returnDocument: 'after' }
+      );
+      await Visitor.findOneAndUpdate(
+        { ip },
+        { $inc: { visitCount: 1 }, lastVisit: new Date(), userAgent: browser },
+        { upsert: true, returnDocument: 'after' }
+      );
+      // 2. Save User Message
+      await Chat.create({ sessionId, role: 'user', message, browser, ip, device });
+    } catch (dbError) {
+      console.warn('Database error ignored:', dbError.message);
+    }
 
     // 3. Pre-processing & Intent Detection
     const lowerMessage = message.toLowerCase();
@@ -36,7 +38,7 @@ export const handleChat = async (req, res) => {
     // Check if user is asking for a lead form
     if (leadKeywords.some(keyword => lowerMessage.includes(keyword))) {
       const responseMsg = "I can certainly help with that. Please fill out the lead form below, and our engineering team will get back to you with a proposal.";
-      await Chat.create({ sessionId, role: 'assistant', message: responseMsg });
+      try { await Chat.create({ sessionId, role: 'assistant', message: responseMsg }); } catch (e) {}
       return res.json({ success: true, response: responseMsg, triggerLeadForm: true });
     }
 
@@ -44,7 +46,7 @@ export const handleChat = async (req, res) => {
     const greetings = ['hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening'];
     if (greetings.includes(lowerMessage.trim())) {
       const responseMsg = "Hello! 👋 Welcome to SteamCore Energy Engineering LLP. I'm your Engineering AI Assistant. I can help you with Boiler Consultancy, Energy Audits, Reliability Engineering, Project Consultancy, and Training Programs. How may I help you today?";
-      await Chat.create({ sessionId, role: 'assistant', message: responseMsg });
+      try { await Chat.create({ sessionId, role: 'assistant', message: responseMsg }); } catch (e) {}
       return res.json({ success: true, response: responseMsg });
     }
 
@@ -52,16 +54,28 @@ export const handleChat = async (req, res) => {
     const faqAnswer = searchFAQ(message);
     
     if (faqAnswer) {
-      await Chat.create({ sessionId, role: 'assistant', message: faqAnswer });
+      try { await Chat.create({ sessionId, role: 'assistant', message: faqAnswer }); } catch (e) {}
       return res.json({ success: true, response: faqAnswer });
     }
 
     // 5. If no exact/fuzzy FAQ match, use Ollama AI with context
     // Fetch last 5 messages for context
-    const history = await Chat.find({ sessionId }).sort({ createdAt: -1 }).limit(5).lean();
-    history.reverse();
+    let history = [];
+    try {
+      history = await Chat.find({ sessionId }).sort({ createdAt: -1 }).limit(5).lean();
+      history.reverse();
+    } catch (dbError) {
+      console.warn('Could not fetch history:', dbError.message);
+    }
 
-    const responseStream = await generateOllamaResponse(message, history);
+    let responseStream;
+    try {
+      responseStream = await generateOllamaResponse(message, history);
+    } catch (ollamaError) {
+      const fallbackMsg = "Sorry, my AI brain is currently offline. (Vercel cannot reach your local Ollama on localhost). Please configure a public AI API URL or use the Contact Form.";
+      try { await Chat.create({ sessionId, role: 'assistant', message: fallbackMsg }); } catch (e) {}
+      return res.json({ success: true, response: fallbackMsg });
+    }
 
     // Set headers for Server-Sent Events (SSE)
     res.setHeader('Content-Type', 'text/event-stream');
