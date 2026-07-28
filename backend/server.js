@@ -29,6 +29,9 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Data sanitization against NoSQL query injection (removed to fix crash)
 
+// Trust Vercel's reverse proxy for rate limiting
+app.set('trust proxy', 1);
+
 // Rate Limiting
 const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
