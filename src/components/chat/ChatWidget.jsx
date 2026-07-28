@@ -9,7 +9,7 @@ import QuickReplies from './QuickReplies';
 import LeadForm from './LeadForm';
 import CursorTrackingRobot from './CursorTrackingRobot';
 
-const BACKEND_URL = 'http://localhost:5000/api';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

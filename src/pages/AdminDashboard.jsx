@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, MessageSquare, Target, Clock, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const BACKEND_URL = 'http://localhost:5000/api';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
 export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState(null);
