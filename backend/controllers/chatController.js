@@ -72,7 +72,7 @@ export const handleChat = async (req, res) => {
     try {
       responseStream = await generateOllamaResponse(message, history);
     } catch (ollamaError) {
-      const fallbackMsg = "Sorry, my AI brain is currently offline. (Vercel cannot reach your local Ollama on localhost). Please configure a public AI API URL or use the Contact Form.";
+      const fallbackMsg = "Sorry, my AI brain is currently offline. Please configure your GROQ_API_KEY in Vercel to activate the cloud AI.";
       try { await Chat.create({ sessionId, role: 'assistant', message: fallbackMsg }); } catch (e) {}
       return res.json({ success: true, response: fallbackMsg });
     }
@@ -96,10 +96,13 @@ export const handleChat = async (req, res) => {
       const chunk = decoder.decode(value, { stream: true });
       const lines = chunk.split('\\n').filter(line => line.trim() !== '');
       
-      for (const line of lines) {
+      for (let line of lines) {
+        if (line.startsWith('data: ')) line = line.replace('data: ', '');
+        if (line.trim() === '[DONE]') continue;
+        
         try {
           const parsed = JSON.parse(line);
-          const token = parsed.message?.content || parsed.response; // Fallback for both endpoints
+          const token = parsed.choices?.[0]?.delta?.content || parsed.message?.content || parsed.response;
           if (token) {
             fullResponse += token;
             // Send chunk to client
