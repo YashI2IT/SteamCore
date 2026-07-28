@@ -170,7 +170,7 @@ export default function ChatWidget() {
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.96 }}
             onClick={() => setIsOpen(true)}
-            className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 overflow-hidden rounded-full border border-white/50 bg-gradient-to-tr from-[#e3d7c5] to-[#f7f2ea] px-2 py-2 pr-6 text-steam-navy shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl transition-shadow hover:shadow-[0_16px_40px_rgba(0,0,0,0.2)]"
+            className="group fixed bottom-4 right-4 z-50 flex items-center gap-2 overflow-hidden rounded-full border border-white/50 bg-gradient-to-tr from-[#e3d7c5] to-[#f7f2ea] px-2 py-2 pr-4 text-steam-navy shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl transition-shadow hover:shadow-[0_16px_40px_rgba(0,0,0,0.2)] sm:bottom-6 sm:right-6 sm:gap-3 sm:pr-6"
           >
             {/* Premium Shimmer Sweep Effect */}
             <div className="absolute inset-0 z-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-1000 ease-in-out group-hover:translate-x-[150%]" />
@@ -178,7 +178,7 @@ export default function ChatWidget() {
             <div className="relative z-10">
               <CursorTrackingRobot size={44} />
             </div>
-            <span className="relative z-10 font-semibold tracking-wide text-steam-navy/90 transition-colors duration-300 group-hover:text-black">Ask SteamCore AI</span>
+            <span className="relative z-10 text-[14px] sm:text-base font-semibold tracking-wide text-steam-navy/90 transition-colors duration-300 group-hover:text-black">Ask SteamCore AI</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -192,7 +192,7 @@ export default function ChatWidget() {
             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
             transition={{ type: 'spring', stiffness: 350, damping: 30 }}
             style={{ transformOrigin: 'bottom right' }}
-            className={`fixed bottom-6 right-6 z-50 flex w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/40 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-2xl sm:right-8 ${isMinimized ? 'h-auto' : 'h-[600px] max-h-[calc(100vh-4rem)]'}`}
+            className={`fixed z-50 flex flex-col overflow-hidden border border-white/40 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-2xl bottom-0 left-0 right-0 w-full rounded-t-[28px] sm:bottom-6 sm:left-auto sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-2rem)] sm:rounded-[28px] ${isMinimized ? 'h-auto' : 'h-[85dvh] max-h-[800px] sm:h-[600px] sm:max-h-[calc(100vh-4rem)]'}`}
           >
             <ChatHeader 
               toggleMinimize={() => setIsMinimized(!isMinimized)} 
