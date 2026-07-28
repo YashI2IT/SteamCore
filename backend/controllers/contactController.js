@@ -21,9 +21,9 @@ export const submitContact = async (req, res) => {
 
     const adminHtml = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
-        <div style="background-color: #1F4E79; padding: 24px; text-align: center;">
-          <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">STEAMCORE</h1>
-          <p style="color: #93c5fd; margin: 5px 0 0 0; font-size: 14px;">New Website Inquiry</p>
+        <div style="background-color: #ffffff; border-bottom: 2px solid #1F4E79; padding: 24px; text-align: center;">
+          <img src="${process.env.FRONTEND_URL || 'https://steam-core.vercel.app'}/logo.png" alt="SteamCore" style="height: 60px; width: auto; margin-bottom: 8px;" />
+          <p style="color: #64748b; margin: 0; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">New Website Inquiry</p>
         </div>
         <div style="padding: 32px;">
           <h2 style="color: #1F4E79; margin-top: 0;">Inquiry Details</h2>
@@ -52,9 +52,9 @@ export const submitContact = async (req, res) => {
     // Auto-Responder Email HTML for the User
     const userHtml = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
-        <div style="background-color: #1F4E79; padding: 32px; text-align: center;">
-          <h1 style="color: #ffffff; margin: 0; font-size: 28px; letter-spacing: 1.5px;">STEAMCORE</h1>
-          <p style="color: #93c5fd; margin: 8px 0 0 0; font-size: 15px;">Energy Engineering LLP</p>
+        <div style="background-color: #ffffff; border-bottom: 2px solid #1F4E79; padding: 32px; text-align: center;">
+          <img src="${process.env.FRONTEND_URL || 'https://steam-core.vercel.app'}/logo.png" alt="SteamCore" style="height: 70px; width: auto; margin-bottom: 12px;" />
+          <p style="color: #64748b; margin: 0; font-size: 15px; font-weight: 500;">Energy Engineering LLP</p>
         </div>
         <div style="padding: 40px 32px;">
           <h2 style="color: #0f172a; margin-top: 0; font-size: 22px;">Thank you for contacting us, ${name.split(' ')[0]}!</h2>
