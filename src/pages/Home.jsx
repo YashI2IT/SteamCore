@@ -23,7 +23,7 @@ export default function Home() {
         initial="initial"
         animate="animate"
         style={{ willChange: 'opacity, transform' }}
-        className="relative w-full px-4 pt-[52px] pb-4 sm:px-6 sm:py-7 lg:px-8"
+        className="relative w-full px-4 pt-2 pb-4 sm:px-6 sm:py-7 lg:px-8"
       >
         {/* Video Container */}
         <div className="fade-mask relative flex min-h-[calc(100svh-100px)] w-full flex-col items-center justify-center overflow-hidden rounded-[32px] border-2 border-steam-navy/90 bg-[#111] sm:min-h-[calc(100svh-120px)] sm:rounded-[36px] md:min-h-[calc(100vh-140px)] md:rounded-[44px]">
