@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // Data sanitization against NoSQL query injection (removed to fix crash)
 
 // Trust Vercel's reverse proxy for rate limiting
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
 // Rate Limiting
 const limiter = rateLimit({

@@ -121,6 +121,8 @@ export default function ChatWidget() {
             }
           }
         }
+      } else {
+        throw new Error('Server returned HTML or unknown content type (Vercel crash)');
       }
     } catch (error) {
       console.error('Chat error:', error);
