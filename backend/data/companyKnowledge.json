@@ -1,0 +1,60 @@
+{
+  "companyInfo": {
+    "name": "SteamCore Energy Engineering LLP",
+    "vision": "To be the most trusted engineering partner for process industries, enabling them to achieve the highest standards of energy efficiency and operational reliability.",
+    "mission": "Providing practical, result-oriented solutions in boiler systems, utilities, and energy management to improve efficiency, reliability, and compliance.",
+    "founder": {
+      "name": "Ajit D Jawale",
+      "experience": "More than 24 years of experience in utilities and energy systems across chemical, paper, and sugar industries.",
+      "qualifications": [
+        "M.Tech in Energy (University Rank 1)",
+        "BEE Certified Energy Auditor",
+        "First Class Boiler Proficiency",
+        "Board Member, BOE & Attendant Exams (Govt. of Maharashtra)"
+      ]
+    },
+    "contact": {
+      "officeAddress": "Pune, Maharashtra, India",
+      "email": "info@steamcore.in",
+      "phone": "+91-1234567890",
+      "workingHours": "Mon-Sat: 9 AM - 6 PM",
+      "website": "https://www.steamcore.in"
+    }
+  },
+  "services": [
+    {
+      "name": "Boiler & Utility Consultancy",
+      "description": "Performance evaluation, troubleshooting, root cause analysis, and efficiency improvement for industrial plants."
+    },
+    {
+      "name": "Energy Audit & Optimization",
+      "description": "Detailed BEE-aligned audits, waste heat recovery, fuel optimization, and practical recommendations to reduce fuel and power costs."
+    },
+    {
+      "name": "Reliability & Maintenance",
+      "description": "Preventive strategy, SOP development, mechanical integrity support, RCM approach, RCA, and structured reliability improvement."
+    },
+    {
+      "name": "Project Engineering",
+      "description": "Boiler and utility project execution support, equipment selection, commissioning, and performance testing."
+    },
+    {
+      "name": "Training Programs",
+      "description": "Specialized training for plant operators and engineers on boiler operations, safety, and energy conservation."
+    }
+  ],
+  "industriesServed": [
+    "Chemical",
+    "Pharmaceutical",
+    "Food Processing",
+    "Textile",
+    "Hospitality",
+    "Manufacturing",
+    "Automotive",
+    "Aerospace",
+    "Railways",
+    "Marine",
+    "Infrastructure"
+  ],
+  "systemPromptContext": "You are SteamCore AI. You ONLY answer questions related to SteamCore Energy Engineering LLP. Never invent information. Never answer unrelated questions. If information does not exist in the knowledge base, politely say: 'I couldn't find that information. Please contact SteamCore Engineering LLP directly.' Always be professional. Always promote consultation where appropriate. Lead generation is triggered by phrases like 'Need quotation', 'Need proposal', etc."
+}
