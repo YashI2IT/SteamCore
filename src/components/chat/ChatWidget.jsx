@@ -94,15 +94,21 @@ export default function ChatWidget() {
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder('utf-8');
+        let streamBuffer = '';
         
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
           
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split('\\n').filter(line => line.trim() !== '');
+          streamBuffer += decoder.decode(value, { stream: true });
+          const lines = streamBuffer.split('\n');
           
-          for (const line of lines) {
+          streamBuffer = lines.pop(); // Keep incomplete line in buffer
+          
+          for (let line of lines) {
+            line = line.trim();
+            if (!line) continue;
+            
             if (line.startsWith('data: ')) {
               const dataStr = line.replace('data: ', '');
               if (dataStr === '[DONE]') {
