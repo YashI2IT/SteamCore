@@ -88,17 +88,24 @@ export const handleChat = async (req, res) => {
     // Read the stream
     const reader = responseStream.body.getReader();
     const decoder = new TextDecoder('utf-8');
+    let streamBuffer = '';
     
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       
-      const chunk = decoder.decode(value, { stream: true });
-      const lines = chunk.split('\\n').filter(line => line.trim() !== '');
+      streamBuffer += decoder.decode(value, { stream: true });
+      const lines = streamBuffer.split('\n');
+      
+      // Keep the last line in the buffer because it might be incomplete
+      streamBuffer = lines.pop(); 
       
       for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+        
         if (line.startsWith('data: ')) line = line.replace('data: ', '');
-        if (line.trim() === '[DONE]') continue;
+        if (line === '[DONE]') continue;
         
         try {
           const parsed = JSON.parse(line);
@@ -106,16 +113,16 @@ export const handleChat = async (req, res) => {
           if (token) {
             fullResponse += token;
             // Send chunk to client
-            res.write(`data: ${JSON.stringify({ chunk: token })}\\n\\n`);
+            res.write(`data: ${JSON.stringify({ chunk: token })}\n\n`);
           }
         } catch (e) {
-          // ignore parsing errors for partial chunks
+          console.error("Stream parse error on line:", line);
         }
       }
     }
 
     // Tell client stream is done
-    res.write('data: [DONE]\\n\\n');
+    res.write('data: [DONE]\n\n');
     res.end();
 
     // Save full AI Response to DB after streaming completes
