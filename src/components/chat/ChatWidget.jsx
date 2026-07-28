@@ -192,7 +192,7 @@ export default function ChatWidget() {
             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
             transition={{ type: 'spring', stiffness: 350, damping: 30 }}
             style={{ transformOrigin: 'bottom right' }}
-            className={`fixed z-50 flex flex-col overflow-hidden border border-black/5 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.16)] bottom-4 left-4 right-4 rounded-[28px] sm:bottom-6 sm:left-auto sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-2rem)] ${isMinimized ? 'h-auto' : 'h-[80dvh] max-h-[750px] sm:h-[600px] sm:max-h-[calc(100vh-4rem)]'}`}
+            className={`fixed z-50 flex flex-col overflow-hidden border border-black/5 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.16)] bottom-4 left-4 right-4 rounded-[28px] sm:bottom-6 sm:left-auto sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-2rem)] ${isMinimized ? 'h-auto' : 'h-[65dvh] min-h-[450px] max-h-[600px] sm:h-[600px] sm:max-h-[calc(100vh-4rem)]'}`}
           >
             <ChatHeader 
               toggleMinimize={() => setIsMinimized(!isMinimized)} 
