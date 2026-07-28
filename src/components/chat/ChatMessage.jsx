@@ -3,19 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export default function ChatMessage({ message, isAI }) {
-  // Fix malformed markdown from small AI models
-  let formattedMessage = message;
-  if (isAI) {
-    // 1. Fix missing newlines before bullet points (e.g., "word* Word" or "word• Word")
-    formattedMessage = formattedMessage.replace(/([a-z0-9.:*])\s*(\*|-|•)\s+([A-Z])/g, '$1\n\n- $3');
-    formattedMessage = formattedMessage.replace(/([a-z0-9.:*])\s*(\*|-|•)([A-Z])/g, '$1\n\n- $3');
-    // 2. Catch raw unicode bullets and convert them to markdown dashes cleanly
-    formattedMessage = formattedMessage.replace(/(^|\n)\s*•\s*/g, '$1- ');
-    // 3. Fix completely squished list items (e.g., "utilitiesBoiler Consultancy:")
-    formattedMessage = formattedMessage.replace(/([a-z])([A-Z][a-zA-Z\s]+:)/g, '$1\n\n- $2');
-    // 4. Clean trailing garbage asterisks
-    formattedMessage = formattedMessage.replace(/\*\*$/g, '');
-  }
+  const formattedMessage = message;
 
   return (
     <motion.div
