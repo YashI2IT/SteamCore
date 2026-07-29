@@ -11,14 +11,66 @@ body,
   overflow-x: hidden;
 }
 
+:root {
+  /* Premium Text Selection Variables */
+  
+  /* Primary Navy translucent tint for default selection */
+  /* #123A6D at ~18% opacity ensures high contrast and subtle elegance */
+  --selection-bg: rgba(18, 58, 109, 0.18);
+  /* Text remains its original color (transparent) or forces a high-contrast dark navy */
+  --selection-color: #0B1F3A;
+  
+  /* Accent Orange translucent tint for dark sections (15% opacity) */
+  --selection-bg-dark: rgba(255, 107, 53, 0.2);
+  --selection-color-dark: #FFFFFF;
+  
+  /* Neutral translucent tint for code blocks */
+  --selection-bg-code: rgba(18, 58, 109, 0.25);
+}
+
 @layer base {
   body {
     @apply bg-steam-cream font-sans text-steam-body antialiased;
   }
+  
+  /* Default Selection styling for light backgrounds */
   ::selection {
-    background-color: #ff6a3d; /* steam-orange */
-    color: #ffffff;
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
   }
+  ::-moz-selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
+  }
+
+  /* Code block specific selection for better readability */
+  pre ::selection,
+  code ::selection {
+    background-color: var(--selection-bg-code);
+  }
+  pre ::-moz-selection,
+  code ::-moz-selection {
+    background-color: var(--selection-bg-code);
+  }
+}
+
+/* Theme-aware selection for dark sections (Cards, Hero Video Mask, Footers) */
+.card-dark ::selection,
+.card-dark-solid ::selection,
+.fade-mask ::selection,
+.bg-steam-navy ::selection,
+.bg-steam-navyDeep ::selection {
+  background-color: var(--selection-bg-dark);
+  color: var(--selection-color-dark);
+}
+
+.card-dark ::-moz-selection,
+.card-dark-solid ::-moz-selection,
+.fade-mask ::-moz-selection,
+.bg-steam-navy ::-moz-selection,
+.bg-steam-navyDeep ::-moz-selection {
+  background-color: var(--selection-bg-dark);
+  color: var(--selection-color-dark);
 }
 
 .section-wrap {
