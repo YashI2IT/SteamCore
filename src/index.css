@@ -15,6 +15,10 @@ body,
   body {
     @apply bg-steam-cream font-sans text-steam-body antialiased;
   }
+  ::selection {
+    background-color: #ff6a3d; /* steam-orange */
+    color: #ffffff;
+  }
 }
 
 .section-wrap {
